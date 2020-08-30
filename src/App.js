@@ -1,26 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import TodoInput from './components/TodoInput'
+import TodoList from './components/TodoList'
+import uuid from 'uuid';
+import "bootstrap/dist/css/bootstrap.min.css"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends Component{
+  constructor(){
+    super()
+    this.state = {
+        input:'',
+        data:[]
+    }
 }
 
-export default App;
+handleSubmit=(event)=>{
+  event.preventDefault();
+  const inputvalue = this.state.input;
+
+  if(inputvalue.length>0){
+    this.setState({
+      data:[...this.state.data,inputvalue],
+      input: ''
+    })
+  }
+  else{
+    alert("you haven't entered anything")
+  }
+}
+
+handleChange = (event)=>{
+    this.setState({
+        input:event.target.value
+    })
+}
+  render(){
+    return(
+      <div>
+      <TodoInput inputvalue={this.handleChange} handleSubmit={this.handleSubmit}/>
+      <TodoList data={this.state.data}/>
+      
+      </div>
+    );
+  }
+}
