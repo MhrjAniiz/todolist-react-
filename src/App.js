@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import TodoInput from './components/TodoInput'
 import TodoList from './components/TodoList'
 import uuid from 'uuid';
-import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap/dist/css/bootstrap.min.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 export default class App extends Component{
   constructor(){
@@ -36,9 +37,12 @@ handleChange = (event)=>{
   render(){
     return(
       <div>
-      <TodoInput inputvalue={this.handleChange} handleSubmit={this.handleSubmit}/>
-      <TodoList data={this.state.data}/>
-      
+        <h1 className="bg-primary text-white p-2 text-center">TODOLIST</h1>
+
+        <div className="container block">
+          <TodoInput  inputvalue={this.handleChange} handleSubmit={this.handleSubmit}/>
+          <TodoList data={this.state.data}/>
+        </div>
       </div>
     );
   }
