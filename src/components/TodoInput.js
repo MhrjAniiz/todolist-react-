@@ -6,21 +6,28 @@ import React, { Component } from 'react';
 
 
     render(){
-        const {inputvalue, handleSubmit}=this.props
+        const {inputvalue, passedInput,handleSubmit}=this.props
         return(
-           <div className='container m-5'>
-               <form onSubmit={handleSubmit}>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-th-list"></i></span>
+            <div className="container">
+                <div className='container mt-5 mb-5'>
+                    <form onSubmit={handleSubmit}>
+                        <div className="input-group mb-3">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text" id="basic-addon1"><i className="fas fa-th-list"></i></span>
+                            </div>
+
+                            <input type="text" className="form-control" name="input"  
+                            placeholder="what you want to complete today?" 
+                            value={passedInput} 
+                            onChange={inputvalue}
+                            />
+                        </div>
+                        <div className="text-center">
+                            <button type="submit" className="btn btn-primary btn-lg " >submit</button>
                     </div>
-                    <input type="text" class="form-control" name="input"  onChange={inputvalue}/>
+                    </form>
+                    
                 </div>
-                <div className="text-center">
-                    <button type="submit" class="btn btn-primary btn-lg " >submit</button>
-               </div>
-               </form>
-               
            </div>
         );
     }

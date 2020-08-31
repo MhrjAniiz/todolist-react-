@@ -4,6 +4,7 @@ import TodoList from './components/TodoList'
 import uuid from 'uuid';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import Scroll from './components/scroll';
 
 export default class App extends Component{
   constructor(){
@@ -35,13 +36,18 @@ handleChange = (event)=>{
     })
 }
   render(){
+    const {data} = this.state
     return(
       <div>
-        <h1 className="bg-primary text-white p-2 text-center">TODOLIST</h1>
+        <h1 className="bg-dark text-white p-2 text-center" >TODO LIST</h1>
 
-        <div className="container block">
-          <TodoInput  inputvalue={this.handleChange} handleSubmit={this.handleSubmit}/>
-          <TodoList data={this.state.data}/>
+        <div className="container ">
+          <TodoInput passedInput={this.state.input} inputvalue={this.handleChange} handleSubmit={this.handleSubmit}/>
+          <h1 className="text-center">There are {data.length} tasks for today.</h1>
+          <Scroll>
+            <TodoList data={this.state.data}/>
+          </Scroll>
+          
         </div>
       </div>
     );
