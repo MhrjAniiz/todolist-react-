@@ -6,9 +6,9 @@ import React, { Component } from 'react';
 
 
     render(){
-        const {inputvalue, passedInput,handleSubmit}=this.props
+        const {inputvalue, passedInput,handleSubmit,edit}=this.props
         return(
-            <div className="container">
+            <div className="container ">
                 <div className='container mt-5 mb-5'>
                     <form onSubmit={handleSubmit}>
                         <div className="input-group mb-3">
@@ -23,7 +23,9 @@ import React, { Component } from 'react';
                             />
                         </div>
                         <div className="text-center">
-                            <button type="submit" className="btn btn-primary btn-lg " >submit</button>
+                            {edit ? (<button type="submit" className="btn btn-success btn-lg " >edit</button>):
+                            (<button type="submit" className="btn btn-primary btn-lg " >submit</button>)}
+                            
                     </div>
                     </form>
                     

@@ -4,9 +4,16 @@ import Todo from './Todo';
 
 class TodoList extends Component{
     render(){
-       const {data} = this.props
-       const information = data.map((info,i)=>{
-         return <Todo key={i} id={i +1} name={data[i]} />
+       const {data, remove, handleEdit} = this.props;
+       console.log(data)
+       const information = data.map((user,i)=>{
+         return (<Todo key={user.id}  
+          id={user.id}
+           value={i+1}   
+           name={user.name} 
+           deleteInfo={remove} 
+           handleEdit={handleEdit}
+           />)
        })
        
         return(

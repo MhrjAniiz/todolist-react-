@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import TodoInput from './components/TodoInput'
 import TodoList from './components/TodoList'
-import uuid from 'uuid';
+import uuid from 'react-uuid'
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import Scroll from './components/scroll';
@@ -11,23 +11,29 @@ export default class App extends Component{
     super()
     this.state = {
         input:'',
-        data:[]
-    }
+        data:[],
+        id:uuid(),
+        edit:false,
+      }
 }
 
 handleSubmit=(event)=>{
   event.preventDefault();
-  const inputvalue = this.state.input;
+  const realData = {
+    id: this.state.id,
+    name: this.state.input
+    };
 
-  if(inputvalue.length>0){
+  const newData = [...this.state.data,realData];
+
     this.setState({
-      data:[...this.state.data,inputvalue],
-      input: ''
+      data:newData,
+      input: '',
+      id: uuid(),
+      edit:false
+
     })
-  }
-  else{
-    alert("you haven't entered anything")
-  }
+
 }
 
 handleChange = (event)=>{
@@ -35,6 +41,37 @@ handleChange = (event)=>{
         input:event.target.value
     })
 }
+deleteInfo=(id)=>{
+  const {data} = this.state;
+  const filterData = data.filter(res=>{
+    return res.id !== id
+  })
+
+  this.setState({
+    data:filterData
+  })
+}
+
+handleEdit=(id)=>{
+  const {data} = this.state;
+  const filterData = data.filter(res=>{
+    return res.id !== id
+  })
+
+  const selectedItem = data.find(res=>{
+    return res.id === id
+  })
+
+  this.setState({
+    data:filterData,
+    input: selectedItem.name,
+    id:id,
+    edit:true
+
+  })
+}
+
+
   render(){
     const {data} = this.state
     return(
@@ -42,10 +79,20 @@ handleChange = (event)=>{
         <h1 className="bg-dark text-white p-2 text-center" >TODO LIST</h1>
 
         <div className="container ">
-          <TodoInput passedInput={this.state.input} inputvalue={this.handleChange} handleSubmit={this.handleSubmit}/>
+          <TodoInput 
+            passedInput={this.state.input} 
+            inputvalue={this.handleChange} 
+            handleSubmit={this.handleSubmit}
+            edit={this.state.edit}
+          />
+
           <h1 className="text-center">There are {data.length} tasks for today.</h1>
+
           <Scroll>
-            <TodoList data={this.state.data}/>
+            <TodoList data={this.state.data}
+            remove={this.deleteInfo} 
+            handleEdit={this.handleEdit}
+            />
           </Scroll>
           
         </div>
