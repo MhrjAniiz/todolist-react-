@@ -4,7 +4,7 @@ import TodoList from './components/TodoList'
 import uuid from 'react-uuid'
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import Scroll from './components/scroll';
+import 'tachyons';
 
 export default class App extends Component{
   constructor(){
@@ -19,21 +19,26 @@ export default class App extends Component{
 
 handleSubmit=(event)=>{
   event.preventDefault();
-  const realData = {
-    id: this.state.id,
-    name: this.state.input
-    };
-
-  const newData = [...this.state.data,realData];
-
-    this.setState({
-      data:newData,
-      input: '',
-      id: uuid(),
-      edit:false
-
-    })
-
+  if(this.state.input.length>0){
+    const realData = {
+      id: this.state.id,
+      name: this.state.input
+      };
+  
+    const newData = [...this.state.data,realData];
+  
+      this.setState({
+        data:newData,
+        input: '',
+        id: uuid(),
+        edit:false
+  
+      })
+  
+  }else{
+    alert('please enter valid info')
+  }
+ 
 }
 
 handleChange = (event)=>{
@@ -78,7 +83,7 @@ handleEdit=(id)=>{
       <div>
         <h1 className="bg-dark text-white p-2 text-center" >TODO LIST</h1>
 
-        <div className="container ">
+        <div >
           <TodoInput 
             passedInput={this.state.input} 
             inputvalue={this.handleChange} 
@@ -88,12 +93,12 @@ handleEdit=(id)=>{
 
           <h1 className="text-center">There are {data.length} tasks for today.</h1>
 
-          <Scroll>
+          <div className="container">
             <TodoList data={this.state.data}
             remove={this.deleteInfo} 
             handleEdit={this.handleEdit}
             />
-          </Scroll>
+          </div>
           
         </div>
       </div>
